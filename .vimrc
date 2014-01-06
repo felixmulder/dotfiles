@@ -23,6 +23,13 @@ nnoremap td  :tabclose<CR>
 " NERDTree 
 nnoremap nt :NERDTree<CR>
 
+" Unbind arrow keys in normal and visual
+for prefix in ['n', 'v']
+        for key in ['<Up>', '<Down>', '<Left>', '<Right>']
+                exe prefix . "noremap " . key . " <Nop>"
+        endfor
+endfor
+
 " Set tab rules
 set tabstop=8
 set shiftwidth=8

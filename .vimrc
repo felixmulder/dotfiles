@@ -30,7 +30,12 @@ for prefix in ['n', 'v']
         endfor
 endfor
 
+" Normalnavigation on wrapped lines
+map j gj
+map k gk
+
 " Set tab rules
+set smarttab
 set tabstop=2
 set shiftwidth=2
 set expandtab
@@ -41,3 +46,15 @@ match OverLength /\%81v.\+/
 
 " Braces
 inoremap {<CR> {<CR>}<Esc>ko
+
+" Bind space in normal mode to search
+map <space> /
+map <c-space> ?
+
+" Move lines with C-j/k
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv

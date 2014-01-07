@@ -11,6 +11,7 @@ mycd() {
 alias cd=mycd
 alias cl=clear
 alias ls='ls --color'
+alias gcc='gcc -Wall -pedantic -std=c99'
 
 export EDITOR=/usr/bin/vim
 

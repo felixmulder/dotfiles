@@ -31,8 +31,8 @@ for prefix in ['n', 'v']
 endfor
 
 " Set tab rules
-set tabstop=8
-set shiftwidth=8
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 " Highlight characters that go over 80 columns

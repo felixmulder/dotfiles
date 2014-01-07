@@ -9,7 +9,8 @@ local naughty   = require("naughty")
 local menubar   = require("menubar")
 local lain      = require("lain")
 
- awful.util.spawn_with_shell("compton -cCGfF -o 0.38 -O 200 -I 200 -t 0.02 -l 0.02 -r 3.2 -D2 -m 0.88 --vsync opengl &")
+-- awful.util.spawn_with_shell("compton -cCGfF -o 0.38 -O 200 -I 200 -t 0.02 -l 0.02 -r 3.2 -D2 -m 0.88 --vsync opengl &")
+awful.util.spawn_with_shell("compton --vsync opengl &")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to

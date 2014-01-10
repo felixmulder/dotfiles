@@ -2,7 +2,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias pacman='sudo pacman-color'
+alias pacman='sudo pacman'
 
 mycd() {
   cd $1 && ls --color=auto

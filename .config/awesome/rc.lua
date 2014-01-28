@@ -1,16 +1,17 @@
 -- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
-awful.rules = require("awful.rules")
-require("awful.autofocus")
-local wibox = require("wibox")
+local gears     = require("gears")
+local awful     = require("awful")
+local wibox     = require("wibox")
 local beautiful = require("beautiful")
 local naughty   = require("naughty")
 local menubar   = require("menubar")
 local lain      = require("lain")
+local vicious   = require("vicious")
+local apaw      = require("apaw/widget")
+local abw       = require("abw/widget")
 
--- awful.util.spawn_with_shell("compton -cCGfF -o 0.38 -O 200 -I 200 -t 0.02 -l 0.02 -r 3.2 -D2 -m 0.88 --vsync opengl &")
-awful.util.spawn_with_shell("compton --vsync opengl &")
+awful.rules = require("awful.rules")
+awful.autofocus = require("awful.autofocus")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -62,14 +63,6 @@ local layouts =
     lain.layout.uselessfair.horizontal,
     lain.layout.uselesspiral.dwindle
 }
--- }}}
-
--- {{{ Wallpaper
-if beautiful.wallpaper then
-    for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-    end
-end
 -- }}}
 
 -- {{{ Tags
@@ -154,6 +147,26 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+-- {{{ Vicious widgets
+neticon = wibox.widget.imagebox()
+vicious.register(neticon, vicious.widgets.wifi, function(widget, args)
+  local sigstrength = args["{linp}"]
+  local ssid = args["{ssid}"]
+ -- naughty.notify({ preset = naughty.config.presets.critical,
+ --                  title = "neticon",
+ --                  text = sigstrength .. ssid })
+  if sigstrength == 0 then
+    neticon:set_image(beautiful.widget_wifi_none)
+  elseif sigstrength > 69 then
+    neticon:set_image(beautiful.widget_wifi_hi)
+  elseif sigstrength > 40 then
+    neticon:set_image(beautiful.widget_wifi_med)
+  else
+    neticon:set_image(beautiful.widget_wifi_low)
+  end
+end, 10, 'wlp3s0')
+--- }}}
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -182,7 +195,12 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    if s == 1 then right_layout:add(wibox.widget.systray()) end
+    if s == 1 then
+      right_layout:add(wibox.widget.systray())
+    end
+    --right_layout:add(neticon)
+    right_layout:add(apaw)
+    right_layout:add(abw)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -206,6 +224,14 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
+    awful.key({ }, "XF86AudioRaiseVolume",  apaw.Up),
+    awful.key({ }, "XF86AudioLowerVolume",  apaw.Down),
+    awful.key({ }, "XF86AudioMute",         apaw.ToggleMute),
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 5") end),
+    awful.key({ }, "XF86MonBrightnessUp",function () awful.util.spawn("xbacklight -inc 5") end),
+    awful.key({ }, "#237",function () awful.util.spawn("kbdlight down") end),
+    awful.key({ }, "#238",function () awful.util.spawn("kbdlight up") end),
+    awful.key({ modkey,           }, "e",function () client.focus = awful.client.getmaster() end),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
@@ -442,9 +468,11 @@ do
     "setxkbmap -option terminate:ctrl_alt_bksp",
     "setxkbmap -layout se -variant mac",
     "udiskie",
+    "pulseaudio",
     "xmodmap .Xmodmap",
-    "mpd",
-    "thunar --daemon"
+    "thunar --daemon",
+    "compton -c -r8 -l-12 -t-8  -b  -G  -f -D10 -I0.45 -O0.45  --paint-on-overlay --unredir-if-possible  --backend glx --glx-no-stencil --glx-no-rebind-pixmap",
+--    "batti",
   }
 
   for _,i in pairs(cmds) do

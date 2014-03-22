@@ -227,8 +227,8 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86AudioRaiseVolume",  apaw.Up),
     awful.key({ }, "XF86AudioLowerVolume",  apaw.Down),
     awful.key({ }, "XF86AudioMute",         apaw.ToggleMute),
-    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 5") end),
-    awful.key({ }, "XF86MonBrightnessUp",function () awful.util.spawn("xbacklight -inc 5") end),
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 15") end),
+    awful.key({ }, "XF86MonBrightnessUp",function () awful.util.spawn("xbacklight -inc 15") end),
     awful.key({ }, "#237",function () awful.util.spawn("kbdlight down") end),
     awful.key({ }, "#238",function () awful.util.spawn("kbdlight up") end),
     awful.key({ modkey,           }, "e",function () client.focus = awful.client.getmaster() end),
@@ -468,11 +468,9 @@ do
     "setxkbmap -option terminate:ctrl_alt_bksp",
     "setxkbmap -layout se -variant mac",
     "udiskie",
-    "pulseaudio",
     "xmodmap .Xmodmap",
     "thunar --daemon",
-    "compton -c -r8 -l-12 -t-8  -b  -G  -f -D10 -I0.45 -O0.45  --paint-on-overlay --unredir-if-possible  --backend glx --glx-no-stencil --glx-no-rebind-pixmap",
---    "batti",
+    "compton --backend glx",
   }
 
   for _,i in pairs(cmds) do

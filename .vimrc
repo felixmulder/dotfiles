@@ -1,5 +1,8 @@
 set nocompatible
 
+" Run pathogen plugins
+execute pathogen#infect()
+
 filetype plugin indent on
 syntax enable 
 set number
@@ -22,6 +25,7 @@ nnoremap td  :tabclose<CR>
 
 " NERDTree 
 nnoremap nt :NERDTree<CR>
+nnoremap nd :NERDTreeClose<CR>
 
 " Unbind arrow keys in normal and visual
 for prefix in ['n', 'v']
@@ -47,10 +51,6 @@ match OverLength /\%81v.\+/
 " Braces
 inoremap {<CR> {<CR>}<Esc>ko
 
-" Bind space in normal mode to search
-map <space> /
-map <c-space> ?
-
 " Move lines with C-j/k
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
@@ -58,3 +58,6 @@ inoremap <C-j> <Esc>:m .+1<CR>==gi
 inoremap <C-k> <Esc>:m .-2<CR>==gi
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
+
+" Disable folding for markdown
+autocmd FileType mkd normal zR

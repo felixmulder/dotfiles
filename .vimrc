@@ -61,3 +61,42 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " Disable folding for markdown
 autocmd FileType mkd normal zR
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Syntax highlighting
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Comments
+hi Comment ctermfg=Grey
+
+" Constants, types
+hi Constant ctermfg=Cyan
+hi String ctermfg=Red cterm=none
+hi Character ctermfg=Red cterm=none
+hi SpecialChar ctermfg=Red cterm=none
+
+" Conditionals, loops
+hi Conditional ctermfg=Black cterm=bold
+hi Repeat ctermfg=Black cterm=bold
+
+" Preprocessor
+hi Preproc ctermfg=LightGrey
+
+" Functions
+hi StorageClass ctermfg=Black
+hi Function ctermfg=Red
+
+" sizeof
+hi Operator ctermfg=Black cterm=bold
+
+" Selection
+hi Visual ctermfg=Cyan
+
+" Highlight Class and Function names
+syn match    cCustomParen    "(" contains=cParen,cCppParen
+syn match    cCustomFunc     "w+s*(" contains=cCustomParen
+syn match    cCustomScope    "::"
+syn match    cCustomClass    "w+s*::" contains=cCustomScope
+
+hi cCustomFunc  ctermfg=Red cterm=none
+hi cCustomClass ctermfg=Red cterm=none

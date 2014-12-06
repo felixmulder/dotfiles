@@ -40,13 +40,14 @@ map k gk
 
 " Set tab rules
 set smarttab
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set expandtab
 
 " Highlight characters that go over 80 columns
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+autocmd BufNewFile,BufRead * match OverLength /\%81v.\+/
+autocmd BufNewFile,BufRead *.scala match OverLength /\%121v.\+/
 
 " Braces
 inoremap {<CR> {<CR>}<Esc>ko
@@ -91,6 +92,10 @@ hi Operator ctermfg=Black cterm=bold
 
 " Selection
 hi Visual ctermfg=Cyan
+
+" Nerdtree splits
+hi VertSplit ctermfg=Grey
+hi StatusLine ctermfg=Grey
 
 " Highlight Class and Function names
 syn match    cCustomParen    "(" contains=cParen,cCppParen

@@ -1,6 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/home/fixel/Skola/EDAA01/Labbledare/Kod/Lab3/src/losn_lab3/fractal'
-let g:netrw_dirhist_2='/home/fixel/Skola/EDAA01/Labbledare/Kod/Lab5'
-let g:netrw_dirhist_3='/home/fixel/Documents/Websites/Taxi97'
-let g:netrw_dirhist_4='/home/fixel/.config/awesome/themes/fence'
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/fixel'
+let g:netrw_dirhist_2='/home/fixel/projects/fest/web'
+let g:netrw_dirhist_3='/home/fixel/projects/fest/web/app'
+let g:netrw_dirhist_4='/home/fixel/projects/fest/web'
+let g:netrw_dirhist_5='/home/fixel/projects/fest/web/public'
+let g:netrw_dirhist_6='/home/fixel/projects/fest/web/public/css'

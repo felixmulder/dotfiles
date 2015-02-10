@@ -1,17 +1,69 @@
 set nocompatible
+filetype off
 
-" Run pathogen plugins
-execute pathogen#infect()
+" Vundle plugins
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/unite.vim'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'scrooloose/nerdcommenter'
 
+call vundle#end()
 filetype plugin indent on
-syntax enable 
+" End vundle plugins
+
+syntax enable
 set number
-set autoindent 
+set autoindent
 set cindent
 set ruler
 set ignorecase
 set showmatch
 set incsearch
+
+" Unite settings
+let g:unite_source_history_yank_enable = 1
+let g:unite_enable_start_insert = 1
+let g:unite_split_rule = "botright"
+let g:unite_force_overwrite_statusline = 0
+let g:unite_winheight = 10
+try
+    let g:unite_source_rec_async_command='ag --nocolor --nogroup -g ""'
+    call unite#filters#matcher_default#use(['matcher_fuzzy'])
+    call unite#filters#sorter_default#use(['sorter_rank'])
+catch
+endtry
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+    " Enable navigation with control-j and control-k in insert mode
+    imap <buffer> <C-j> <Plug>(unite_select_next_line)
+    imap <buffer> <C-k> <Plug>(unite_select_previous_line)
+    imap <silent><buffer><expr> <C-x> unite#do_action('split')
+    imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction
+
+" opening files
+nnoremap <space><space> :<C-u>Unite buffer file_rec/async:!<cr>
+nnoremap <space>r <Plug>(unite_restart)
+" switching buffers
+nnoremap <space>s :Unite -quick-match buffer<cr>
+
+" fix whitespaec marking at end of file
+let g:extra_whitespace_ignored_filetypes = ['unite']
+
+" EasyAlign stuff
+" From visual mode, select portion to align, press enter then space
+vnoremap <silent> <Enter> :EasyAlign<cr>
+
+" Rebind leader key
+let mapleader = ","
 
 " Buffered tab bindings
 nnoremap th  :tabfirst<CR>
@@ -23,16 +75,16 @@ nnoremap tn  :tabnew<CR>
 nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
 
-" NERDTree 
-nnoremap nt :NERDTree<CR>
-nnoremap nd :NERDTreeClose<CR>
+"" NERDTree
+"nnoremap nt :NERDTree<CR>
+"nnoremap nd :NERDTreeClose<CR>
 
-" Unbind arrow keys in normal and visual
-for prefix in ['n', 'v']
-        for key in ['<Up>', '<Down>', '<Left>', '<Right>']
-                exe prefix . "noremap " . key . " <Nop>"
-        endfor
-endfor
+"" Unbind arrow keys in normal and visual
+"for prefix in ['n', 'v']
+    "for key in ['<Up>', '<Down>', '<Left>', '<Right>']
+        "exe prefix . "noremap " . key . " <Nop>"
+    "endfor
+"endfor
 
 " Normalnavigation on wrapped lines
 map j gj
@@ -48,6 +100,8 @@ set expandtab
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 autocmd BufNewFile,BufRead * match OverLength /\%81v.\+/
 autocmd BufNewFile,BufRead *.scala match OverLength /\%121v.\+/
+autocmd BufNewFile,BufRead *.html  match OverLength /\%251v.\+/
+autocmd BufNewFile,BufRead *.js  match OverLength /\%251v.\+/
 
 " Braces
 inoremap {<CR> {<CR>}<Esc>ko
@@ -60,48 +114,48 @@ inoremap <C-k> <Esc>:m .-2<CR>==gi
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 
-" Disable folding for markdown
-autocmd FileType mkd normal zR
+" Enable markdown syntax in md files
+au BufRead,BufNewFile *.md set filetype=markdown
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Comments
-hi Comment ctermfg=Grey
+"hi Comment ctermfg=Grey
 
-" Constants, types
-hi Constant ctermfg=Cyan
-hi String ctermfg=Red cterm=none
-hi Character ctermfg=Red cterm=none
-hi SpecialChar ctermfg=Red cterm=none
+"" Constants, types
+"hi Constant ctermfg=Cyan
+"hi String ctermfg=Red cterm=none
+"hi Character ctermfg=Red cterm=none
+"hi SpecialChar ctermfg=Red cterm=none
 
-" Conditionals, loops
-hi Conditional ctermfg=Black cterm=bold
-hi Repeat ctermfg=Black cterm=bold
+"" Conditionals, loops
+"hi Conditional ctermfg=Black cterm=bold
+"hi Repeat ctermfg=Black cterm=bold
 
-" Preprocessor
-hi Preproc ctermfg=LightGrey
+"" Preprocessor
+"hi Preproc ctermfg=LightGrey
 
-" Functions
-hi StorageClass ctermfg=Black
-hi Function ctermfg=Red
+"" Functions
+"hi StorageClass ctermfg=Black
+"hi Function ctermfg=Red
 
-" sizeof
-hi Operator ctermfg=Black cterm=bold
+"" sizeof
+"hi Operator ctermfg=Black cterm=bold
 
-" Selection
-hi Visual ctermfg=Cyan
+"" Selection
+"hi Visual ctermfg=Cyan
 
-" Nerdtree splits
-hi VertSplit ctermfg=Grey
-hi StatusLine ctermfg=Grey
+"" Nerdtree splits
+"hi VertSplit ctermfg=Grey
+"hi StatusLine ctermfg=Grey
 
-" Highlight Class and Function names
-syn match    cCustomParen    "(" contains=cParen,cCppParen
-syn match    cCustomFunc     "w+s*(" contains=cCustomParen
-syn match    cCustomScope    "::"
-syn match    cCustomClass    "w+s*::" contains=cCustomScope
+"" Highlight Class and Function names
+"syn match    cCustomParen    "(" contains=cParen,cCppParen
+"syn match    cCustomFunc     "w+s*(" contains=cCustomParen
+"syn match    cCustomScope    "::"
+"syn match    cCustomClass    "w+s*::" contains=cCustomScope
 
-hi cCustomFunc  ctermfg=Red cterm=none
-hi cCustomClass ctermfg=Red cterm=none
+"hi cCustomFunc  ctermfg=Red cterm=none
+"hi cCustomClass ctermfg=Red cterm=none

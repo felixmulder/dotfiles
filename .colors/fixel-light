@@ -1,0 +1,40 @@
+*background:  #fdf6e3
+*foreground:  #657b83
+
+
+! BLACK
+*color0:      #c0c0c0
+*color8:      #c0c0c0
+
+! WHITE
+*color7:      #222222
+*color15:     #222222
+
+! RED
+*color1:      #B21522
+*color9:      #B21522
+
+! GREEN
+*color2:      #2b874a
+*color10:     #2b874a
+
+! YELLOW
+*color3:      #965617
+*color11:     #965617
+
+! BLUE
+*color4:      #268bd2
+*color12:     #657b83
+
+! MAGENTA
+*color5:      #d33682
+*color13:     #6c71c4
+
+! CYAN
+*color6:      #297b70
+*color14:     #297b70
+
+! man pages
+*colorBD: 11
+*colorUL: 13
+*colorIT: #8cd0d3

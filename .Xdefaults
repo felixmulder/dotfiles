@@ -1,10 +1,12 @@
-#include "/home/fixel/.colors/smlb"
+#include "/home/fixel/.colors/fixel-light"
 
 URxvt.scrollstyle: plain
 URxvt.scrollBar: off
 !URxvt*font: -misc-fixed-medium-r-semicondensed-*-14-90-100-*-c-60-iso8859-1
-URxvt*font: -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
-!URxvt*font: xft:Meslo LG M-8
+!URxvt*font: -*-terminus-medium-*-*-*-14-*-*-*-*-*-*-*
+!URxvt*font: xft:Ubuntu Mono:pixelsize=15
+URxvt*font: xft:Inconsolata-g:g:pixelsize=15
+!URxvt*font: xft:Meslo LG M:pixelsize=12:antialias=true
 
 URxvt*termName:rxvt-unicode-256color
 URxvt.jumpScroll: false
@@ -12,7 +14,6 @@ URxvt.jumpScroll: false
 URxvt.letterSpace: 0
 URxvt.internalBorder: 2
 URxvt*loginShell: true
-Xft.dpi: 96
 Xft.antialias: true
 Xft.rgba: rgb
 Xft.hinting: false

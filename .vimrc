@@ -11,6 +11,7 @@ Plugin 'Shougo/unite.vim'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'Shougo/vimfiler.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -24,6 +25,17 @@ set ruler
 set ignorecase
 set showmatch
 set incsearch
+
+" Explorer like NERDTree
+let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_safe_mode_by_default = 0
+let g:vimfiler_tree_leaf_icon = ' '
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+let g:vimfiler_file_icon = '-'
+let g:vimfiler_readonly_file_icon = '✗'
+let g:vimfiler_marked_file_icon = '✓'
+nnoremap <space>f :VimFiler -toggle<CR>
 
 " Unite settings
 let g:unite_source_history_yank_enable = 1
@@ -50,7 +62,7 @@ function! s:unite_settings()
 endfunction
 
 " opening files
-nnoremap <space><space> :<C-u>Unite buffer file_rec/async:!<cr>
+nnoremap <space><space> :<C-u>Unite buffer file_rec<cr>
 nnoremap <space>r <Plug>(unite_restart)
 " switching buffers
 nnoremap <space>s :Unite -quick-match buffer<cr>
@@ -75,17 +87,6 @@ nnoremap tn  :tabnew<CR>
 nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
 
-"" NERDTree
-"nnoremap nt :NERDTree<CR>
-"nnoremap nd :NERDTreeClose<CR>
-
-"" Unbind arrow keys in normal and visual
-"for prefix in ['n', 'v']
-    "for key in ['<Up>', '<Down>', '<Left>', '<Right>']
-        "exe prefix . "noremap " . key . " <Nop>"
-    "endfor
-"endfor
-
 " Normalnavigation on wrapped lines
 map j gj
 map k gk
@@ -98,7 +99,7 @@ set expandtab
 
 " Highlight characters that go over 80 columns
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-autocmd BufNewFile,BufRead * match OverLength /\%81v.\+/
+autocmd BufNewFile,BufRead *.* match OverLength /\%81v.\+/
 autocmd BufNewFile,BufRead *.scala match OverLength /\%121v.\+/
 autocmd BufNewFile,BufRead *.html  match OverLength /\%251v.\+/
 autocmd BufNewFile,BufRead *.js  match OverLength /\%251v.\+/
@@ -159,3 +160,7 @@ au BufRead,BufNewFile *.md set filetype=markdown
 
 "hi cCustomFunc  ctermfg=Red cterm=none
 "hi cCustomClass ctermfg=Red cterm=none
+"
+
+"" Stupid OSX
+set backspace=indent,eol,start

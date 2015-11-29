@@ -462,8 +462,8 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autorun programs
 do
-  local cmds = 
-  { 
+  local cmds =
+  {
     "nitrogen --restore",
     "setxkbmap -option terminate:ctrl_alt_bksp",
     "setxkbmap -layout se -variant mac",
@@ -471,6 +471,7 @@ do
     "xmodmap .Xmodmap",
     "thunar --daemon",
     "compton --backend glx",
+    "xset r rate 190 30",
   }
 
   for _,i in pairs(cmds) do

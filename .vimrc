@@ -26,6 +26,9 @@ set ignorecase
 set showmatch
 set incsearch
 
+" Smart copying in terminal
+set mouse+=a
+
 " Explorer like NERDTree
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default = 0

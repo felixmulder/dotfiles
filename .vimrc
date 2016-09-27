@@ -12,10 +12,21 @@ Plugin 'derekwyatt/vim-scala'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Shougo/vimfiler.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'rust-lang/rust.vim'
+Plugin 'othree/html5.vim'
+Plugin 'digitaltoad/vim-pug'
 
 call vundle#end()
 filetype plugin indent on
 " End vundle plugins
+
+" Airline commands
+set laststatus=2
+let g:airline_powerline_fonts = 1
+let g:airline_theme='luna'
 
 syntax enable
 set number
@@ -28,6 +39,10 @@ set incsearch
 
 " Smart copying in terminal
 set mouse+=a
+set clipboard=unnamed
+
+" Smart ctags, i.e. search up
+set tags=tags;/
 
 " Explorer like NERDTree
 let g:vimfiler_as_default_explorer = 1
@@ -40,35 +55,14 @@ let g:vimfiler_readonly_file_icon = '✗'
 let g:vimfiler_marked_file_icon = '✓'
 nnoremap <space>f :VimFiler -toggle<CR>
 
-" Unite settings
-let g:unite_source_history_yank_enable = 1
-let g:unite_enable_start_insert = 1
-let g:unite_split_rule = "botright"
-let g:unite_force_overwrite_statusline = 0
-let g:unite_winheight = 10
-try
-    let g:unite_source_rec_async_command='ag --nocolor --nogroup -g ""'
-    call unite#filters#matcher_default#use(['matcher_fuzzy'])
-    call unite#filters#sorter_default#use(['sorter_rank'])
-catch
-endtry
-
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-    " Enable navigation with control-j and control-k in insert mode
-    imap <buffer> <C-j> <Plug>(unite_select_next_line)
-    imap <buffer> <C-k> <Plug>(unite_select_previous_line)
-    imap <silent><buffer><expr> <C-x> unite#do_action('split')
-    imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-    nmap <buffer> <ESC> <Plug>(unite_exit)
-endfunction
-
 " opening files
-nnoremap <space><space> :<C-u>Unite buffer file_rec<cr>
-nnoremap <space>r <Plug>(unite_restart)
-" switching buffers
-nnoremap <space>s :Unite -quick-match buffer<cr>
+nnoremap <space><space> :CtrlP .<CR>
+nnoremap <space>b :CtrlPBuffer<CR>
+
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](target|\.(git|hg|svn))$',
+  \ 'file': '\v\.(swp|so|o|out|bbl|blg|aux|log|toc|jar|class)$',
+  \ }
 
 " fix whitespaec marking at end of file
 let g:extra_whitespace_ignored_filetypes = ['unite']
@@ -100,6 +94,9 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" Set scala-docstrings
+let g:scala_scaladoc_indent = 1
+
 " Highlight characters that go over 80 columns
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 autocmd BufNewFile,BufRead *.* match OverLength /\%81v.\+/
@@ -120,6 +117,12 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " Enable markdown syntax in md files
 au BufRead,BufNewFile *.md set filetype=markdown
+
+" Remove scroll functionality
+nmap <ScrollWheelUp> <nop>
+inoremap <ScrollWheelUp> <nop>
+nmap <ScrollWheelDown> <nop>
+inoremap <ScrollWheelDown> <nop>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax highlighting

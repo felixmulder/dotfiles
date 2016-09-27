@@ -1,4 +1,4 @@
-#include "/home/fixel/.colors/fixel-light"
+#include "/Users/fixel/.colors/fixel-light"
 
 URxvt.scrollstyle: plain
 URxvt.scrollBar: off

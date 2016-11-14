@@ -18,6 +18,8 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'othree/html5.vim'
 Plugin 'digitaltoad/vim-pug'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
 filetype plugin indent on
@@ -27,6 +29,7 @@ filetype plugin indent on
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_theme='luna'
+let g:airline#extensions#tabline#enabled = 1
 
 syntax enable
 set number
@@ -55,12 +58,23 @@ let g:vimfiler_readonly_file_icon = '✗'
 let g:vimfiler_marked_file_icon = '✓'
 nnoremap <space>f :VimFiler -toggle<CR>
 
+" clipboard sharing Linux:
+vnoremap <C-c> "+y
+
 " opening files
 nnoremap <space><space> :CtrlP .<CR>
 nnoremap <space>b :CtrlPBuffer<CR>
 
+" remap ¤ to end of line
+nnoremap ¤ <End>
+
+" Clear highlighting on escape in normal mode
+set hlsearch
+nnoremap <esc> :noh<return><esc>
+nnoremap <esc>^[ <esc>^[
+
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](target|\.(git|hg|svn))$',
+  \ 'dir':  '\v[\/](_site|target|\.(git|hg|svn))$',
   \ 'file': '\v\.(swp|so|o|out|bbl|blg|aux|log|toc|jar|class)$',
   \ }
 
@@ -127,6 +141,7 @@ inoremap <ScrollWheelDown> <nop>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+hi Visual term=reverse cterm=reverse guibg=White
 
 " Comments
 "hi Comment ctermfg=Grey

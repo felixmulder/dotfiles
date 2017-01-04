@@ -59,7 +59,7 @@ let g:vimfiler_marked_file_icon = '✓'
 nnoremap <space>f :VimFiler -toggle<CR>
 
 " clipboard sharing Linux:
-vnoremap <C-c> "+y
+"vnoremap <C-c> "+y
 
 " opening files
 nnoremap <space><space> :CtrlP .<CR>
@@ -67,6 +67,12 @@ nnoremap <space>b :CtrlPBuffer<CR>
 
 " remap ¤ to end of line
 nnoremap ¤ <End>
+
+" macOS settings
+nnoremap € <End>
+set backspace=indent,eol,start
+set list
+set listchars=nbsp:¬
 
 " Clear highlighting on escape in normal mode
 set hlsearch
@@ -182,6 +188,3 @@ hi Visual term=reverse cterm=reverse guibg=White
 "hi cCustomFunc  ctermfg=Red cterm=none
 "hi cCustomClass ctermfg=Red cterm=none
 "
-
-"" Stupid OSX
-set backspace=indent,eol,start

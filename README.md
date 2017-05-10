@@ -32,3 +32,9 @@ $ source ~/.zhsrc
 $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 $ vim +PluginInstall +UpdateRemotePlugins +qall
 ```
+
+### Make vim open links on ⌘+lclick
+
+In iTerm: Settings -> Profiles -> Advanced
+
+Set "Semantic History" to `Run coprocess...` with argument `echo vim \1`

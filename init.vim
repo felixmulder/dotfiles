@@ -12,6 +12,7 @@
   Plug 'purescript-contrib/purescript-vim'
   Plug 'LnL7/vim-nix'
   Plug 'hashivim/vim-terraform'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
   " Theme
   Plug 'liuchengxu/space-vim-dark'
@@ -91,6 +92,12 @@
     \ 'dir': '\v[\/](_site|result|dist|node_modules|output|target|\.(git|hg|svn))$',
     \ 'file': '\v\.(swp|so|o|out|bbl|blg|aux|log|toc|jar|class|hi)$',
     \ }
+" }
+
+" Deoplete {
+  let g:deoplete#enable_at_startup = 1
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " }
 
 " Theme {

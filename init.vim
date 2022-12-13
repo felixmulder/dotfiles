@@ -1,112 +1,161 @@
-" Plug {
-  call plug#begin('~/.vim/plugged')
-  Plug 'bronson/vim-trailing-whitespace' " :FixWhiteSpace
-  Plug 'ctrlpvim/ctrlp.vim'
-  Plug 'Shougo/unite.vim'
-  Plug 'Shougo/vimfiler.vim'
+set mouse+=a
+set clipboard=unnamed
+set autoindent
+set cindent
+set ruler
+set ignorecase
+set showmatch
+set incsearch
 
-  " Syntax & Language
-  Plug 'othree/html5.vim'
-  Plug 'neovimhaskell/haskell-vim'
-  Plug 'derekwyatt/vim-scala'
-  Plug 'purescript-contrib/purescript-vim'
-  Plug 'LnL7/vim-nix'
-  Plug 'hashivim/vim-terraform'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let mapleader = ","
 
-  " Theme
-  Plug 'liuchengxu/space-vim-dark'
-  call plug#end()
+call plug#begin('~/.vim/plugged')
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'plasticboy/vim-markdown'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'kyazdani42/nvim-tree.lua'
+
+" Themes
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'connorholyday/vim-snazzy'
+
+" Testing
+Plug 'vim-test/vim-test'
+
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'folke/lsp-colors.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+
+" Formatting
+Plug 'sbdchd/neoformat' ", { 'for': ['javascript', 'javascript.jsx'] }
+
+call plug#end()
+
+" fzf {
+    nnoremap <space><space> :Files<CR>
+    nnoremap <space>b :Buffers<CR>
+    nnoremap <space>l :BLines<CR>
+    let g:fzf_action = { 'ctrl-t': 'e', 'ctrl-s': 'split', 'ctrl-v': 'vsplit' }
+" }
+"
+" LSP {
+    lua require("lsp_config")
+    lua require("nvim_tree")
 " }
 
-" General {
-  syntax enable
-  "set cursorline
-  set laststatus=2
-  set number
-  set autoindent
-  set ignorecase
-  set ruler
-  set showmatch
-  set incsearch
-  set hlsearch
+" Theming {
+    syntax enable
+    filetype plugin indent on
+    set cursorline
+    set number
+    colorscheme snazzy
+
+
+    " Airline {
+        set laststatus=2
+        let g:airline_powerline_fonts=1
+        let g:airline_theme='base16_snazzy' "palenight
+        let g:airline#extensions#tabline#enabled=1
+    " }
 " }
 
-" Clipboard {
-  set mouse+=a
-  set clipboard+=unnamedplus
+" Tab rules {
+    set smarttab
+    set tabstop=2
+    set shiftwidth=2
+    set expandtab
 " }
 
-" Keybindings {
-  inoremap {<CR> {<CR>}<Esc>ko
-  nnoremap <space><space> :CtrlP .<CR>
-  nnoremap <esc> :noh<return><esc>
-  nnoremap <esc>^[ <esc>^[
-  map j gj
-  map k gk
-  " Move lines with C-j/k
-  nnoremap <C-j> :m .+1<CR>==
-  nnoremap <C-k> :m .-2<CR>==
-  inoremap <C-j> <Esc>:m .+1<CR>==gi
-  inoremap <C-k> <Esc>:m .-2<CR>==gi
-  vnoremap <C-j> :m '>+1<CR>gv=gv
-  vnoremap <C-k> :m '<-2<CR>gv=gv
+" Clear highlightin in normal mode {
+    set hlsearch
+    nnoremap <esc> :noh<return><esc>
+    nnoremap <esc>^[ <esc>^[
 " }
 
-" Tab Rules {
-  set smarttab
-  set tabstop=2
-  set shiftwidth=2
-  set expandtab
+" Testing options {
+    let g:test#preserve_screen = 1
+    let test#neovim#term_position = "vert botright"
+    let test#vim#term_position = "vert"
+    let test#strategy = "neovim"
+
+    nnoremap <leader>tf :TestFile<CR>
+    nnoremap <leader>tn :TestNearest<CR>
+    nnoremap <leader>tl :TestLast<CR>
+" }
+
+" Better line navigation {
+    map j gj
+    map k gk
 " }
 
 " Buffered tab bindings {
-  nnoremap th  :tabfirst<CR>
-  nnoremap tj  :tabnext<CR>
-  nnoremap tk  :tabprev<CR>
-  nnoremap tl  :tablast<CR>
-  nnoremap tt  :tabedit<Space>
-  nnoremap tn  :tabnew<CR>
-  nnoremap tm  :tabm<Space>
-  nnoremap td :tabclose<CR>
+    nnoremap th  :b1<CR>
+    nnoremap tj  :bn<CR>
+    nnoremap tk  :bp<CR>
+    nnoremap tl  :bl<CR>
+    nnoremap tn  :enew<CR>
+    nnoremap td  :bd<CR>
 " }
 
-" Vim Filer {
-  let g:vimfiler_as_default_explorer = 1
-  let g:vimfiler_safe_mode_by_default = 0
-  let g:vimfiler_tree_leaf_icon = ' '
-  let g:vimfiler_tree_opened_icon = '▾'
-  let g:vimfiler_tree_closed_icon = '▸'
-  let g:vimfiler_file_icon = '-'
-  let g:vimfiler_readonly_file_icon = '✗'
-  let g:vimfiler_marked_file_icon = '✓'
-  nnoremap <space>f :VimFiler -toggle<CR>
+" Braces {
+    inoremap {<CR> {<CR>}<Esc>ko
 " }
 
-" Haskell Specific options {
-  let g:haskell_enable_quantification = 1
+" Move lines with C-j/k {
+    nnoremap <C-j> :m .+1<CR>==
+    nnoremap <C-k> :m .-2<CR>==
+    inoremap <C-j> <Esc>:m .+1<CR>==gi
+    inoremap <C-k> <Esc>:m .-2<CR>==gi
+    vnoremap <C-j> :m '>+1<CR>gv=gv
+    vnoremap <C-k> :m '<-2<CR>gv=gv
 " }
 
-" CtrlP ignore {
-  let g:ctrlp_custom_ignore = {
-    \ 'dir': '\v[\/](_site|result|dist|node_modules|output|target|\.(git|hg|svn))$',
-    \ 'file': '\v\.(swp|so|o|out|bbl|blg|aux|log|toc|jar|class|hi)$',
-    \ }
+" Remove scroll functionality {
+    nmap <ScrollWheelUp> <nop>
+    inoremap <ScrollWheelUp> <nop>
+    nmap <ScrollWheelDown> <nop>
+    inoremap <ScrollWheelDown> <nop>
 " }
 
-" Deoplete {
-  let g:deoplete#enable_at_startup = 1
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Enable prettier on ts/js/tsx files {
+    let g:neoformat_try_formatprg = 1
+    let g:neoformat_enabled_javascript = ['prettier', 'eslint_d']
+    let g:neoformat_run_all_formatters = 1
+
+    " If we have a `node_modules` dir in pwd, let's add its bins to PATH:
+    if isdirectory($PWD .'/node_modules')
+        let $PATH .= ':' . $PWD . '/node_modules/.bin'
+    endif
+
+    autocmd BufWritePre *.js Neoformat
+    autocmd BufWritePre *.jsx Neoformat
+    autocmd BufWritePre *.ts Neoformat
+    autocmd BufWritePre *.tsx Neoformat
 " }
 
-" Theme {
-  colorscheme space-vim-dark
-  "hi Comment cterm=italic
-  hi Comment    guifg=#5C6370 ctermfg=59
-  hi Normal     ctermbg=NONE guibg=NONE
-  hi LineNr     ctermbg=NONE guibg=NONE
-  hi SignColumn ctermbg=NONE guibg=NONE
-  hi Search     ctermbg=8 ctermfg=11 guifg=NONE guibg=NONE
-  hi IncSearch  ctermbg=8 ctermfg=11 guifg=NONE guibg=NONE
+" Enable rustfmt for rs files {
+    autocmd BufWritePre *.rs Neoformat
+" }
+
+" Markdown settings {
+    let g:vim_markdown_folding_disabled = 1
+    let g:vim_markdown_conceal = 0
+    let g:tex_conceal = ""
+    let g:vim_markdown_math = 1
+    let g:vim_markdown_frontmatter = 1
+    let g:vim_markdown_toml_frontmatter = 1
+    let g:vim_markdown_json_frontmatter = 1
+
+    " Enable markdown syntax in md files
+    augroup pandoc_syntax
+        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+    augroup END
+
+    "hi Conceal ctermfg=109 guifg=#83a598 ctermbg=NONE guibg=NONE
+    highlight Conceal ctermbg=none ctermfg=none guibg=none guifg=none
 " }

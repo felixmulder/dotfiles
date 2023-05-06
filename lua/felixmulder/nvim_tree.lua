@@ -1,10 +1,6 @@
-local nvim_tree = require('nvim-tree')
-
-nvim_tree.setup {
+require('nvim-tree').setup {
   disable_netrw = true,
   hijack_netrw = true,
-  open_on_setup = false,
-  ignore_ft_on_setup = {},
   open_on_tab = false,
   hijack_cursor = false,
   update_cwd = false,
@@ -36,8 +32,8 @@ nvim_tree.setup {
     timeout = 500,
   },
   view = {
-    width = 30,
-    height = 30,
+    -- width = 30,
+    -- height = 30,
     hide_root_folder = false,
     side = 'left',
     mappings = {
@@ -54,5 +50,5 @@ nvim_tree.setup {
 }
 
 vim.api.nvim_set_keymap(
-  'n', '<space>f', '<Cmd>NvimTreeFindFileToggle<CR>', { noremap=true, silent=true }
+  'n', '<space>f', '<Cmd>NvimTreeFindFileToggle<CR>', { noremap = true, silent = true }
 )
